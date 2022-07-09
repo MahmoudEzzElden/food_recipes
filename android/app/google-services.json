@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "537685149372",
+    "project_id": "mi-receta-98762",
+    "storage_bucket": "mi-receta-98762.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:537685149372:android:99e2534ccce8fcf53772b9",
+        "android_client_info": {
+          "package_name": "com.example.food_recipes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "537685149372-co8vtqalklpqjppqhstkc0t3hqjrkoh3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcA8wznI_dmmzMjjYr5pF23io6hgYoDLQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "537685149372-co8vtqalklpqjppqhstkc0t3hqjrkoh3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
