@@ -1,14 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:food_recipes/controller/providers/category.dart';
 import 'package:food_recipes/controller/providers/recipe_provider.dart';
-import 'package:food_recipes/model/constants.dart';
 import 'package:food_recipes/model/recipe_model.dart';
 import 'package:food_recipes/view/screens/add_recipe.dart';
 import 'package:food_recipes/view/screens/recipe_details.dart';
 import 'package:food_recipes/view/widgets/category_card.dart';
-import 'package:food_recipes/view/widgets/drawer.dart';
-import 'package:food_recipes/view/widgets/recipe_tile.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
 
 
@@ -26,7 +25,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: recetaDrawer(),
       body: Container(
         padding: EdgeInsets.all(20),
         child: Column(
@@ -35,10 +33,10 @@ class _HomePageState extends State<HomePage> {
               height: 20,
             ),
             Align(
-              alignment: Alignment.topCenter,
+              alignment: Alignment.center,
               child: Text(
                 'Mis Recetas',
-                style: TextStyle(fontSize: 30, color: Colors.redAccent),
+                style: TextStyle(fontSize: 30, color: Colors.redAccent,fontFamily: 'CormorantSC'),
               ),
             ),
             SizedBox(
@@ -64,7 +62,9 @@ class _HomePageState extends State<HomePage> {
             SizedBox(height: 20,),
             FutureBuilder<List<RecipeModel>>(
               future: Provider.of<RecipeProvider>(context,listen: false).getRecipes(
-                  Provider.of<CategoryProvider>(context).homeCategory==null?'Carne':Provider.of<CategoryProvider>(context).homeCategory!
+                  Provider.of<CategoryProvider>(context).homeCategory==null?
+                      Provider.of<CategoryProvider>(context,listen: false).homeCategory='Carne'
+                      :Provider.of<CategoryProvider>(context).homeCategory!
               ),
                 builder: (context,snapshot){
                return   snapshot.hasData?
@@ -80,9 +80,12 @@ class _HomePageState extends State<HomePage> {
                               Center(child: Text('No Recipes'),):
                            Dismissible(
                              direction: DismissDirection.startToEnd,
-                             key: ObjectKey(snapshot.data![index]),
+                             key: UniqueKey(),
                              onDismissed: (direction){
                               Provider.of<RecipeProvider>(context,listen: false).deleteRecipe(snapshot.data![index].id!);
+                              FirebaseStorage.instance
+                                  .ref('usersImages/${snapshot.data![index].recName}')
+                                  .delete();
                              },
                              background: Container(alignment: Alignment.centerLeft,
                                color: Colors.redAccent,
@@ -104,6 +107,7 @@ class _HomePageState extends State<HomePage> {
                                    shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                                   child:
                                       Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.all(10.0),
@@ -114,10 +118,14 @@ class _HomePageState extends State<HomePage> {
                                                   width: 100,
                                                   height: 100,
                                                   imageUrl: snapshot.data![index].recImage!,
+                                                placeholder: (context, url) => Center(child: LoadingAnimationWidget.inkDrop(color: Colors.redAccent, size: 40)),
                                               ),
                                             ),
                                           ),
-                                          Text(snapshot.data![index].recName!)
+                                          Padding(
+                                            padding: const EdgeInsets.only(top: 20),
+                                            child: Text(snapshot.data![index].recName!,style: TextStyle(fontSize: 18,fontFamily: 'CormorantSC',fontWeight: FontWeight.bold),),
+                                          )
                                         ],
                                       )
 
@@ -129,7 +137,7 @@ class _HomePageState extends State<HomePage> {
                    ):
                       snapshot.hasError?
                           Center(child: Text(snapshot.error.toString()),):
-                          Center(child: CircularProgressIndicator(),);
+                          Center(child: LoadingAnimationWidget.beat(color: Colors.redAccent, size: 10),);
                 })
           ],
         ),

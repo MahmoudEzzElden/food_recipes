@@ -2,7 +2,6 @@ import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:food_recipes/controller/providers/category.dart';
-import 'package:food_recipes/controller/providers/home_category.dart';
 import 'package:food_recipes/controller/providers/image_handler.dart';
 import 'package:food_recipes/controller/providers/recipe_provider.dart';
 import 'package:food_recipes/view/screens/add_recipe.dart';
@@ -18,8 +17,6 @@ void main() async {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider<CategoryProvider>(
         create: (context) => CategoryProvider()),
-    ChangeNotifierProvider<HomeCategory>(
-        create: (context) => HomeCategory()),
     ChangeNotifierProvider<RecipeProvider>(
         create: (context) => RecipeProvider()),
     ChangeNotifierProvider<ImageHandler>(
@@ -44,7 +41,10 @@ class MyApp extends StatelessWidget {
         home: AnimatedSplashScreen(
           backgroundColor: Color(0xFFFFAEC8),
           nextScreen: HomePage(),
-          splash: Image.asset('assets/mi_receta_splash.png'),
+          splash:
+             Image.asset('assets/mi_receta_splash.png'),
+
+
           splashIconSize: 400,
           splashTransition: SplashTransition.fadeTransition,
           pageTransitionType: PageTransitionType.bottomToTop,

@@ -7,6 +7,7 @@ import 'package:food_recipes/controller/providers/recipe_provider.dart';
 import 'package:food_recipes/model/recipe_model.dart';
 import 'package:food_recipes/view/screens/home_page.dart';
 import 'package:food_recipes/view/widgets/custome_text_field.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../../database_service/firestorage_service.dart';
@@ -34,6 +35,8 @@ class _AddRecipeState extends State<AddRecipe> {
     recipeName.dispose();
     super.dispose();
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +100,9 @@ class _AddRecipeState extends State<AddRecipe> {
                             width: 150,
                             height: 150,
                             imageUrl:
-                                'https://firebasestorage.googleapis.com/v0/b/mi-receta-98762.appspot.com/o/noImage.jpg?alt=media&token=0aec11cb-309b-41aa-b75b-09f8d1c8288f')
+                                'https://firebasestorage.googleapis.com/v0/b/mi-receta-98762.appspot.com/o/noImage.jpg?alt=media&token=0aec11cb-309b-41aa-b75b-09f8d1c8288f',
+                        placeholder: (context, url) => Center(child: LoadingAnimationWidget.hexagonDots(color: Colors.redAccent, size: 40))
+                    )
                         : Image.file(
                             Provider.of<ImageHandler>(context).selectedImage!,
                             width: 150,
@@ -188,7 +193,7 @@ class _AddRecipeState extends State<AddRecipe> {
             recipeIngredients.clear();
             Provider.of<CategoryProvider>(context, listen: false)
                     .categryValue ==
-                '';
+                null;
             Provider.of<ImageHandler>(context,listen: false).selectedImage==null;
             return Navigator.pushNamed(context, HomePage.routeName);
           });

@@ -4,7 +4,7 @@ import 'package:food_recipes/controller/providers/category.dart';
 import 'package:provider/provider.dart';
 
 Widget CategoryCard(BuildContext context,int index) {
-
+List<String> icons=['assets/icons/meat.png','assets/icons/chicken.png','assets/icons/rice.png','assets/icons/pasta.png','assets/icons/sause.png','assets/icons/bread.png','assets/icons/dessert.png'];
 
  return Container(
    width: 120,
@@ -22,7 +22,13 @@ Widget CategoryCard(BuildContext context,int index) {
        )
      ],
    ),
-    child: Center(child: Text('${Provider.of<CategoryProvider>(context).categoryList[index]}',
-      style: TextStyle(fontSize: 18,color:Colors.lightGreen),),),
+    child: Row(
+      children: [
+        Image.asset(icons[index]),
+        SizedBox(width: 7,),
+        Text('${Provider.of<CategoryProvider>(context).categoryList[index]}',
+          style: TextStyle(fontSize: 18,color:Colors.lightGreen),),
+      ],
+    ),
   );
 }
