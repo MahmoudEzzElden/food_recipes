@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 
 import '../../database_service/firestorage_service.dart';
 
+
 class AddRecipe extends StatefulWidget {
   static const String routeName = 'AddRecipe';
 
@@ -28,6 +29,7 @@ class _AddRecipeState extends State<AddRecipe> {
 
   final recipePreparation = TextEditingController();
 
+
   @override
   void dispose() {
     recipePreparation.dispose();
@@ -42,11 +44,11 @@ class _AddRecipeState extends State<AddRecipe> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.redAccent,
-        title: Text('Add Recipe'),
+        backgroundColor:Colors.redAccent,
+        title: const Text('Add Recipe'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,10 +59,10 @@ class _AddRecipeState extends State<AddRecipe> {
                     showDialog(
                         context: context,
                         builder: (BuildContext context) => AlertDialog(
-                              title: Text('Choose a method '),
+                              title: const Text('Choose a method '),
                               actions: [
                                 ListTile(
-                                  leading: Icon(Icons.image),
+                                  leading: const Icon(Icons.image),
                                   title: TextButton(
                                     onPressed: () {
                                       Provider.of<ImageHandler>(context,
@@ -68,14 +70,14 @@ class _AddRecipeState extends State<AddRecipe> {
                                           .pickGalleryImage();
                                       Navigator.pop(context);
                                     },
-                                    child: Text(
+                                    child: const Text(
                                       'Pick From Gallery',
-                                      style: TextStyle(color: Colors.redAccent),
+                                      style: TextStyle(color:Colors.redAccent),
                                     ),
                                   ),
                                 ),
                                 ListTile(
-                                  leading: Icon(Icons.camera_alt),
+                                  leading: const Icon(Icons.camera_alt),
                                   title: TextButton(
                                     onPressed: () {
                                       Provider.of<ImageHandler>(context,
@@ -83,9 +85,9 @@ class _AddRecipeState extends State<AddRecipe> {
                                           .pickCameraImage();
                                       Navigator.pop(context);
                                     },
-                                    child: Text(
+                                    child: const Text(
                                       'Pick From Camera',
-                                      style: TextStyle(color: Colors.redAccent),
+                                      style: TextStyle(color:Colors.redAccent),
                                     ),
                                   ),
                                 ),
@@ -101,7 +103,7 @@ class _AddRecipeState extends State<AddRecipe> {
                             height: 150,
                             imageUrl:
                                 'https://firebasestorage.googleapis.com/v0/b/mi-receta-98762.appspot.com/o/noImage.jpg?alt=media&token=0aec11cb-309b-41aa-b75b-09f8d1c8288f',
-                        placeholder: (context, url) => Center(child: LoadingAnimationWidget.hexagonDots(color: Colors.redAccent, size: 40))
+                        placeholder: (context, url) => Center(child: LoadingAnimationWidget.hexagonDots(color:Colors.redAccent, size: 40))
                     )
                         : Image.file(
                             Provider.of<ImageHandler>(context).selectedImage!,
@@ -111,10 +113,10 @@ class _AddRecipeState extends State<AddRecipe> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
-              Text(
+              const Text(
                 'Recipe Name',
                 style: TextStyle(
                     fontSize: 24,
@@ -124,7 +126,7 @@ class _AddRecipeState extends State<AddRecipe> {
               CustomFormField(
                 controller: recipeName,
               ),
-              Text(
+              const Text(
                 'Ingredients',
                 style: TextStyle(
                     fontSize: 24,
@@ -134,26 +136,26 @@ class _AddRecipeState extends State<AddRecipe> {
               CustomFormField(
                 controller: recipeIngredients,
               ),
-              Text(
+              const Text(
                 'Preparation',
                 style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
-                    color: Colors.redAccent),
+                    color:Colors.redAccent),
               ),
               CustomFormField(
                 controller: recipePreparation,
               ),
               DropdownButton(
                 borderRadius: BorderRadius.circular(10),
-                dropdownColor: Color(0xFFFFAEC8),
-                style: TextStyle(color: Colors.black, fontSize: 18),
-                icon: Icon(
+                dropdownColor: const Color(0xFFFFAEC8),
+                style: const TextStyle(color: Colors.black, fontSize: 18),
+                icon: const Icon(
                   Icons.arrow_drop_down_circle_outlined,
                   color: Colors.redAccent,
                 ),
                 value: Provider.of<CategoryProvider>(context).categryValue,
-                hint: Text(
+                hint: const Text(
                   'Select Category',
                   style: TextStyle(fontSize: 18, color: Colors.redAccent),
                 ),
@@ -173,8 +175,9 @@ class _AddRecipeState extends State<AddRecipe> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Color(0xFFFFAEC8),
+        backgroundColor: const Color(0xFFFFAEC8),
         onPressed: () async {
+
           await FireStorage.uploadImage(Provider.of<ImageHandler>(context,listen: false).selectedImage!.path, recipeName.text.trim());
           String url= await FirebaseStorage.instance.ref('usersImages/${recipeName.text.trim()}').getDownloadURL();
           await Provider.of<RecipeProvider>(context, listen: false)
@@ -198,9 +201,9 @@ class _AddRecipeState extends State<AddRecipe> {
             return Navigator.pushNamed(context, HomePage.routeName);
           });
         },
-        child: Icon(
+        child: const Icon(
           Icons.save,
-          color: Colors.redAccent,
+          color:Colors.redAccent,
         ),
       ),
     );

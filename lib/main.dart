@@ -5,7 +5,6 @@ import 'package:food_recipes/controller/providers/category.dart';
 import 'package:food_recipes/controller/providers/image_handler.dart';
 import 'package:food_recipes/controller/providers/recipe_provider.dart';
 import 'package:food_recipes/view/screens/add_recipe.dart';
-import 'package:food_recipes/view/screens/category_page.dart';
 import 'package:food_recipes/view/screens/home_page.dart';
 import 'package:food_recipes/view/screens/recipe_details.dart';
 import 'package:page_transition/page_transition.dart';
@@ -33,14 +32,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
         routes: {
-        AddRecipe.routeName:(context)=>AddRecipe(),
-          HomePage.routeName:(context)=>HomePage(),
-          CategoryPage.routeName:(context)=>CategoryPage(),
-          RecipeDetails.routeName:(context)=>RecipeDetails(),
+        AddRecipe.routeName:(context)=>const AddRecipe(),
+          HomePage.routeName:(context)=>const HomePage(),
+          RecipeDetails.routeName:(context)=>const RecipeDetails(),
         },
         home: AnimatedSplashScreen(
-          backgroundColor: Color(0xFFFFAEC8),
-          nextScreen: HomePage(),
+          backgroundColor: const Color(0xFFFFAEC8),
+          nextScreen: const HomePage(),
           splash:
              Image.asset('assets/mi_receta_splash.png'),
 

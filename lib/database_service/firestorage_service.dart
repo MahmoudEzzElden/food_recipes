@@ -12,7 +12,7 @@ class FireStorage{
       await FirebaseStorage.instance.ref('usersImages/$imageName').putFile(imageFile);
       EasyLoading.dismiss();
     } on FirebaseException catch(e){
-      EasyLoading.showError(e.message!,duration: Duration(seconds: 4));
+      EasyLoading.showError(e.message!,duration: const Duration(seconds: 4));
       EasyLoading.dismiss();
     }
   }

@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:food_recipes/controller/providers/category.dart';
 import 'package:food_recipes/database_service/database_handler.dart';
 import 'package:food_recipes/model/recipe_model.dart';
+import 'package:provider/provider.dart';
 
 class RecipeProvider with ChangeNotifier{
+  bool? editMode=false;
+ changeMode(){
+   editMode = !editMode!;
+   notifyListeners();
+ }
 List<RecipeModel> list=[];
 
 Future<List<RecipeModel>> getRecipes(String category) async {
